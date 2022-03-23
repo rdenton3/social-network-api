@@ -15,6 +15,11 @@ const UserSchema = new Schema(
 
         },
         thoughts:[ThoughtsSchema]
+    },
+    {
+        toJSON: {
+            virtuals:true,
+        }
     }
 )
 
