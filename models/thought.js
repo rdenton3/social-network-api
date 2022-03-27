@@ -13,16 +13,22 @@ const ThoughtSchema = new Schema(
             default: Date.now
         },
         username: {
-          type: Schema.Types.ObjectId,
-          ref: 'User'  
+        type: String,
+        required: true,
+        trim: true
+        // but why is it not hooked up to object ID
+        //   type: Schema.Types.ObjectId,
+        //   ref: 'User'  
         },
         // reactions: [ReactionSchema]
     },
     {
         toJSON: {
-
-        }
-    }
+          virtuals: true,
+          getters: true
+        },
+        id: false
+      }
 )
 
 // const ReactionSchema = new Schema(
@@ -52,9 +58,9 @@ const ThoughtSchema = new Schema(
 //     }
 // )
 
-ThoughtSchema.virtual('reactionCount').get(function(){
-    return this.reactions.length
-})
+// ThoughtSchema.virtual('reactionCount').get(function(){
+//     return this.reactions.length
+// })
 
 const Thought = model('Thought', ThoughtSchema)
 

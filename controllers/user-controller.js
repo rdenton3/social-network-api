@@ -9,6 +9,10 @@ const userController = {
     // get all users
     getAllUsers(req,res) {
         User.find({})
+        .populate({
+            path: 'thoughts',
+            select: '__v'
+        })
         .then(userData => res.json(userData))
         .catch(err => {
             console.log(err)
@@ -18,6 +22,10 @@ const userController = {
     // get user by id
     getUserById({params},res) {
         User.findOne({_id:params.id})
+        .populate({
+            path: 'thoughts',
+            select: '__v'
+        })
         .then(userData => res.json(userData))
         .catch(err => {
             console.log(err)
