@@ -13,6 +13,8 @@ const userController = {
             path: 'thoughts',
             select: '__v'
         })
+        // .select('-__v')
+        // .sort({ _id: -1 })
         .then(userData => res.json(userData))
         .catch(err => {
             console.log(err)
@@ -54,6 +56,21 @@ const userController = {
             res.json(userData)
         })
         .catch(err => res.status(400).json(err))
+    },
+    addFriend({params}, res) {
+        User.findOneAndUpdate(
+            {_id:params.userId},
+            {$push:{friends: params.friendId}},
+            { new: true, runValidators: true }
+        )
+        .then(friendData => {
+            if (!friendData) {
+              res.status(404).json({ message: 'No user found with this id!' });
+              return;
+            }
+            res.json(friendData);
+          })
+          .catch(err => res.json(err));
     }
 }
 module.exports = userController;
