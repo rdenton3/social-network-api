@@ -13,8 +13,8 @@ const userController = {
             path: 'thoughts',
             select: '__v'
         })
-        // .select('-__v')
-        // .sort({ _id: -1 })
+        .select('-__v')
+        .sort({ _id: -1 })
         .then(userData => res.json(userData))
         .catch(err => {
             console.log(err)
@@ -57,6 +57,7 @@ const userController = {
         })
         .catch(err => res.status(400).json(err))
     },
+    // add friend
     addFriend({params}, res) {
         User.findOneAndUpdate(
             {_id:params.userId},
@@ -71,6 +72,16 @@ const userController = {
             res.json(friendData);
           })
           .catch(err => res.json(err));
+    },
+    // delete friend
+    deleteFriend({params}, res){
+        User.findOneAndUpdate(
+            {_id: params.userId},
+            {$pull: {friends: params.friendId}},
+            { new: true }
+        )
+        .then(userData => res.json(userData))
+        .catch(err => res.json(err));
     }
 }
 module.exports = userController;
