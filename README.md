@@ -1,4 +1,4 @@
-# Team Generator
+# Social Network API
   
 
   ## Table of Contents 
